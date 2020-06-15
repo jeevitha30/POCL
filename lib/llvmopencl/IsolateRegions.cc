@@ -160,12 +160,6 @@ void
 IsolateRegions::addDummyBefore(llvm::Region *R, llvm::BasicBlock *bb) {
   std::vector< llvm::BasicBlock* > regionPreds;
 
-  for (pred_iterator i = pred_begin(bb), e = pred_end(bb);
-       i != e; ++i) {
-    llvm::BasicBlock* pred = *i;
-    if (R->contains(pred))
-      regionPreds.push_back(pred);
-  }
   llvm::BasicBlock* newExit = 
     SplitBlockPredecessors(bb, regionPreds, ".r_exit");
   R->replaceExit(newExit);
